@@ -1,9 +1,3 @@
-// =====================================
-// SE JÁ ESTIVER LOGADO, PULA O LOGIN
-// =====================================
-if (localStorage.getItem("logado") === "true") {
-  window.location.href = "https://vtmcursos.netlify.app/";
-}
 
 // =====================================
 // ELEMENTOS DO HTML
@@ -101,6 +95,7 @@ btnLogin.addEventListener("click", () => {
     window.location.href = "https://vtmcursos.netlify.app/";
   }, 2600);
 });
+
 
 
 
