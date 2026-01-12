@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Client</title>
+    <title>virtum cursos</title>
 
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
@@ -13,7 +13,7 @@
 </head>
 <body>
 
-    <!-- OVERLAY + LOADING (blur da tela) -->
+    <!-- OVERLAY + LOADING (BLUR DA TELA) -->
     <div id="overlay" class="hidden">
         <div class="spinner"></div>
     </div>
@@ -27,17 +27,18 @@
         <!-- CAIXA DE LOGIN -->
         <div id="login-box">
 
-            <!-- USUÁRIO -->
-            <input 
-                type="text" 
-                id="username" 
+            <!-- INPUT USUÁRIO -->
+            <input
+                type="text"
+                id="username"
                 placeholder="Usuário"
+                autocomplete="off"
             >
 
-            <!-- SENHA -->
-            <input 
-                type="password" 
-                id="password-box" 
+            <!-- INPUT SENHA -->
+            <input
+                type="password"
+                id="password-box"
                 placeholder="Senha"
             >
 
@@ -51,18 +52,15 @@
             <!-- BOTÃO LOGIN -->
             <button id="login-button">Login</button>
 
-            <!-- A mensagem (erro/sucesso) é criada pelo JS -->
+            <!-- A MENSAGEM (erro/sucesso) É CRIADA PELO JS -->
         </div>
 
     </div>
 
     <!-- JAVASCRIPT -->
-    <script src="script.js"></script>
+    <script src="login.js"></script>
 
 </body>
 </html>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Client</title>
 
 
