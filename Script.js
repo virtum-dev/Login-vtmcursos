@@ -13,9 +13,9 @@ const overlay = document.getElementById("overlay");
 // USUÁRIOS VÁLIDOS
 // =====================================
 const usuariosValidos = {
-  gustavo: "1234",
-  felipe: "7272",
-  adrian: "9999"
+  fixelfx_dev: "1234",
+  virtum_dev: "7272",
+  sophia2025: "9999"
 };
 
 // =====================================
@@ -94,3 +94,4 @@ btnLogin.addEventListener("click", () => {
     window.location.href = "https://vtmcursos.netlify.app/";
   }, 2600);
 });
+
