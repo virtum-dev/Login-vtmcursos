@@ -1,6 +1,5 @@
-
 // =====================================
-// ELEMENTOS DO HTML
+// PEGANDO ELEMENTOS DO HTML
 // =====================================
 const username = document.getElementById("username");
 const password = document.getElementById("password-box");
@@ -11,16 +10,15 @@ const loginBox = document.getElementById("login-box");
 const overlay = document.getElementById("overlay");
 
 // =====================================
-// USUÁRIOS VÁLIDOS
+// USUÁRIOS VÁLIDOS (SIMULA BANCO DE DADOS)
 // =====================================
 const usuariosValidos = {
   fixelfx: "1234",
-  virtum_dev: "7272",
-  anacaroline2026: "9999"
+  virtum_dev: "7272"
 };
 
 // =====================================
-// MENSAGEM DE FEEDBACK
+// CRIANDO MENSAGEM DE FEEDBACK
 // =====================================
 const mensagem = document.createElement("p");
 mensagem.id = "mensagem";
@@ -35,13 +33,17 @@ function mostrarMensagem(texto, tipo) {
 // 👁️ MOSTRAR / ESCONDER SENHA
 // =====================================
 togglePassword.addEventListener("click", () => {
-  password.type = password.type === "password" ? "text" : "password";
-  togglePassword.textContent =
-    password.type === "text" ? "🙈" : "👁️";
+  if (password.type === "password") {
+    password.type = "text";
+    togglePassword.textContent = "🙈";
+  } else {
+    password.type = "password";
+    togglePassword.textContent = "👁️";
+  }
 });
 
 // =====================================
-// ANIMAÇÃO DE ERRO
+// ANIMAÇÃO DE ERRO (SHAKE)
 // =====================================
 function animarErro() {
   loginBox.classList.add("shake");
@@ -51,7 +53,7 @@ function animarErro() {
 }
 
 // =====================================
-// LOGIN COM LOADING + REDIRECIONAMENTO
+// LOGIN COM USUÁRIOS DEFINIDOS
 // =====================================
 btnLogin.addEventListener("click", () => {
   const user = username.value.trim().toLowerCase();
@@ -64,7 +66,7 @@ btnLogin.addEventListener("click", () => {
     return;
   }
 
-  // ❌ USUÁRIO OU SENHA INVÁLIDOS
+  // ❌ USUÁRIO NÃO EXISTE OU SENHA ERRADA
   if (!usuariosValidos[user] || usuariosValidos[user] !== pass) {
     mostrarMensagem("Usuário ou senha incorretos", "error");
     animarErro();
@@ -80,21 +82,34 @@ btnLogin.addEventListener("click", () => {
 
   setTimeout(() => {
     mostrarMensagem("Autenticando usuário...", "success");
-  }, 1200);
+  }, 1000);
 
   setTimeout(() => {
-    // 💾 SALVA LOGIN
-    localStorage.setItem("logado", "true");
-    localStorage.setItem("usuario", user);
+    mostrarMensagem(`Bem-vindo, ${user}!`, "success");
 
+    // 💾 LOGIN OFFLINE
     if (offlineCheckbox.checked) {
       localStorage.setItem("loginOffline", "true");
+      localStorage.setItem("userSalvo", user);
     }
 
-    // 🔁 REDIRECIONAMENTO FINAL
-    window.location.href = "https://vtmcursos.netlify.app/";
-  }, 2600);
+    overlay.classList.add("hidden");
+
+    // 🔁 REDIRECIONAMENTO
+    window.location.href = "https://vtmcursos.netlify.app";
+  }, 2500);
 });
+
+// =====================================
+// LOGIN OFFLINE AUTOMÁTICO
+// =====================================
+if (localStorage.getItem("loginOffline") === "true") {
+  const userSalvo = localStorage.getItem("userSalvo");
+  if (userSalvo) {
+    username.value = userSalvo;
+    mostrarMensagem("Login offline ativado", "success");
+  }
+
 
 
 
