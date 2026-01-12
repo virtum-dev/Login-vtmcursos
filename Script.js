@@ -16,7 +16,7 @@ const overlay = document.getElementById("overlay");
 const usuariosValidos = {
   fixelfx: "1234",
   virtumsites: "7272",
-  sophiamordavidadoadrian: "9999"
+  anacaroline2026: "9999"
 };
 
 // =====================================
@@ -95,6 +95,7 @@ btnLogin.addEventListener("click", () => {
     window.location.href = "https://vtmcursos.netlify.app/";
   }, 2600);
 });
+
 
 
 
