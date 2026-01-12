@@ -91,7 +91,8 @@ btnLogin.addEventListener("click", () => {
     }
 
     // 🔁 REDIRECIONAMENTO FINAL
-    window.location.href = "https://vtmcursos.netlify.app/";
+    window.location.href = "https://vtmcursos.netlify.app/aulainiciojs/aulajsinicio1";
   }, 2600);
 });
+
 
