@@ -1,11 +1,4 @@
 // =====================================
-// SE JÁ ESTIVER LOGADO, PULA O LOGIN
-// =====================================
-if (localStorage.getItem("logado") === "true") {
-  window.location.href = "index.html";
-}
-
-// =====================================
 // ELEMENTOS DO HTML
 // =====================================
 const username = document.getElementById("username");
@@ -17,7 +10,7 @@ const loginBox = document.getElementById("login-box");
 const overlay = document.getElementById("overlay");
 
 // =====================================
-// USUÁRIOS VÁLIDOS (SIMULA BANCO)
+// USUÁRIOS VÁLIDOS
 // =====================================
 const usuariosValidos = {
   gustavo: "1234",
@@ -57,7 +50,7 @@ function animarErro() {
 }
 
 // =====================================
-// LOGIN COM LOADING ANIMADO
+// LOGIN COM LOADING + REDIRECIONAMENTO
 // =====================================
 btnLogin.addEventListener("click", () => {
   const user = username.value.trim().toLowerCase();
@@ -97,7 +90,7 @@ btnLogin.addEventListener("click", () => {
       localStorage.setItem("loginOffline", "true");
     }
 
-    // 🔁 REDIRECIONA
-    window.location.href = "index.html";
+    // 🔁 REDIRECIONAMENTO FINAL
+    window.location.href = "https://vtmcursos.netlify.app/";
   }, 2600);
 });
