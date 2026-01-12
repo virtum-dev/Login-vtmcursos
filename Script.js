@@ -1,6 +1,13 @@
-// ===============================
-// PEGANDO ELEMENTOS DO HTML
-// ===============================
+// =====================================
+// SE JÁ ESTIVER LOGADO, PULA O LOGIN
+// =====================================
+if (localStorage.getItem("logado") === "true") {
+  window.location.href = "index.html";
+}
+
+// =====================================
+// ELEMENTOS DO HTML
+// =====================================
 const username = document.getElementById("username");
 const password = document.getElementById("password-box");
 const btnLogin = document.getElementById("login-button");
@@ -9,9 +16,18 @@ const offlineCheckbox = document.getElementById("log-offline-checkbox");
 const loginBox = document.getElementById("login-box");
 const overlay = document.getElementById("overlay");
 
-// ===============================
+// =====================================
+// USUÁRIOS VÁLIDOS (SIMULA BANCO)
+// =====================================
+const usuariosValidos = {
+  gustavo: "1234",
+  felipe: "7272",
+  adrian: "9999"
+};
+
+// =====================================
 // MENSAGEM DE FEEDBACK
-// ===============================
+// =====================================
 const mensagem = document.createElement("p");
 mensagem.id = "mensagem";
 loginBox.appendChild(mensagem);
@@ -21,22 +37,18 @@ function mostrarMensagem(texto, tipo) {
   mensagem.className = tipo; // success | error
 }
 
-// ===============================
+// =====================================
 // 👁️ MOSTRAR / ESCONDER SENHA
-// ===============================
+// =====================================
 togglePassword.addEventListener("click", () => {
-  if (password.type === "password") {
-    password.type = "text";
-    togglePassword.textContent = "🙈";
-  } else {
-    password.type = "password";
-    togglePassword.textContent = "👁️";
-  }
+  password.type = password.type === "password" ? "text" : "password";
+  togglePassword.textContent =
+    password.type === "text" ? "🙈" : "👁️";
 });
 
-// ===============================
-// ANIMAÇÃO DE ERRO (SHAKE)
-// ===============================
+// =====================================
+// ANIMAÇÃO DE ERRO
+// =====================================
 function animarErro() {
   loginBox.classList.add("shake");
   setTimeout(() => {
@@ -44,57 +56,48 @@ function animarErro() {
   }, 400);
 }
 
-// ===============================
-// LOGIN FAKE TIPO LAUNCHER
-// ===============================
+// =====================================
+// LOGIN COM LOADING ANIMADO
+// =====================================
 btnLogin.addEventListener("click", () => {
-  const user = username.value.trim();
+  const user = username.value.trim().toLowerCase();
   const pass = password.value.trim();
 
-  // Verificação básica
+  // ❌ CAMPOS VAZIOS
   if (user === "" || pass === "") {
     mostrarMensagem("Preencha todos os campos", "error");
     animarErro();
     return;
   }
 
-  // Desativa botão
+  // ❌ USUÁRIO OU SENHA INVÁLIDOS
+  if (!usuariosValidos[user] || usuariosValidos[user] !== pass) {
+    mostrarMensagem("Usuário ou senha incorretos", "error");
+    animarErro();
+    return;
+  }
+
+  // ✅ LOGIN VÁLIDO
   btnLogin.disabled = true;
   btnLogin.textContent = "Conectando...";
-
-  // Mostra overlay + blur
   overlay.classList.remove("hidden");
 
-  // Etapas fake de login (launcher style)
   mostrarMensagem("Conectando ao servidor...", "success");
 
   setTimeout(() => {
     mostrarMensagem("Autenticando usuário...", "success");
-  }, 1000);
+  }, 1200);
 
   setTimeout(() => {
-    mostrarMensagem(`Bem-vindo, ${user}!`, "success");
+    // 💾 SALVA LOGIN
+    localStorage.setItem("logado", "true");
+    localStorage.setItem("usuario", user);
 
-    // Login offline
     if (offlineCheckbox.checked) {
       localStorage.setItem("loginOffline", "true");
-      localStorage.setItem("userSalvo", user);
     }
 
-    overlay.classList.add("hidden");
-    btnLogin.textContent = "Login";
-
-    console.log("Client iniciado 😎🚀");
-  }, 2500);
+    // 🔁 REDIRECIONA
+    window.location.href = "index.html";
+  }, 2600);
 });
-
-// ===============================
-// LOGIN OFFLINE AUTOMÁTICO
-// ===============================
-if (localStorage.getItem("loginOffline") === "true") {
-  const userSalvo = localStorage.getItem("userSalvo");
-  if (userSalvo) {
-    username.value = userSalvo;
-    mostrarMensagem("Login offline ativado", "success");
-  }
-}
