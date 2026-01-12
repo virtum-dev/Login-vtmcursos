@@ -1,4 +1,11 @@
 // =====================================
+// SE JÁ ESTIVER LOGADO, PULA O LOGIN
+// =====================================
+if (localStorage.getItem("logado") === "true") {
+  window.location.href = "https://vtmcursos.netlify.app/";
+}
+
+// =====================================
 // ELEMENTOS DO HTML
 // =====================================
 const username = document.getElementById("username");
@@ -13,9 +20,9 @@ const overlay = document.getElementById("overlay");
 // USUÁRIOS VÁLIDOS
 // =====================================
 const usuariosValidos = {
-  fixelfx_dev: "1234",
-  virtum_dev: "7272",
-  sophia2025: "9999"
+  gustavo: "1234",
+  felipe: "7272",
+  adrian: "9999"
 };
 
 // =====================================
@@ -91,8 +98,9 @@ btnLogin.addEventListener("click", () => {
     }
 
     // 🔁 REDIRECIONAMENTO FINAL
-    window.location.href = "https://vtmcursos.netlify.app/aulainiciojs/aulajsinicio1";
+    window.location.href = "https://vtmcursos.netlify.app/";
   }, 2600);
 });
+
 
 
