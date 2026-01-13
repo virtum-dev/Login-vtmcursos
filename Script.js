@@ -1,119 +1,112 @@
-// =====================================
-// PEGANDO ELEMENTOS DO HTML
-// =====================================
-const username = document.getElementById("username");
-const password = document.getElementById("password-box");
-const btnLogin = document.getElementById("login-button");
-const togglePassword = document.getElementById("toggle-password");
-const offlineCheckbox = document.getElementById("log-offline-checkbox");
-const loginBox = document.getElementById("login-box");
-const overlay = document.getElementById("overlay");
+document.addEventListener("DOMContentLoaded", () => {
 
-// =====================================
-// USUÁRIOS VÁLIDOS (SIMULA BANCO DE DADOS)
-// =====================================
-const usuariosValidos = {
-  fixelfx: "1234",
-  virtum_dev: "7272"
-};
+  // =====================================
+  // PEGANDO ELEMENTOS DO HTML
+  // =====================================
+  const username = document.getElementById("username");
+  const password = document.getElementById("password-box");
+  const btnLogin = document.getElementById("login-button");
+  const togglePassword = document.getElementById("toggle-password");
+  const offlineCheckbox = document.getElementById("log-offline-checkbox");
+  const loginBox = document.getElementById("login-box");
+  const overlay = document.getElementById("overlay");
 
-// =====================================
-// CRIANDO MENSAGEM DE FEEDBACK
-// =====================================
-const mensagem = document.createElement("p");
-mensagem.id = "mensagem";
-loginBox.appendChild(mensagem);
+  // =====================================
+  // "BANCO DE DADOS" SIMULADO
+  // =====================================
+  const usuariosValidos = {
+    fixelfx: "7272",
+    virtum_dev: "7272",
+    gustavo: "1234"
+  };
 
-function mostrarMensagem(texto, tipo) {
-  mensagem.textContent = texto;
-  mensagem.className = tipo; // success | error
-}
+  // =====================================
+  // MENSAGEM DE FEEDBACK
+  // =====================================
+  const mensagem = document.createElement("p");
+  mensagem.id = "mensagem";
+  loginBox.appendChild(mensagem);
 
-// =====================================
-// 👁️ MOSTRAR / ESCONDER SENHA
-// =====================================
-togglePassword.addEventListener("click", () => {
-  if (password.type === "password") {
-    password.type = "text";
-    togglePassword.textContent = "🙈";
-  } else {
-    password.type = "password";
-    togglePassword.textContent = "👁️";
-  }
-});
-
-// =====================================
-// ANIMAÇÃO DE ERRO (SHAKE)
-// =====================================
-function animarErro() {
-  loginBox.classList.add("shake");
-  setTimeout(() => {
-    loginBox.classList.remove("shake");
-  }, 400);
-}
-
-// =====================================
-// LOGIN COM USUÁRIOS DEFINIDOS
-// =====================================
-btnLogin.addEventListener("click", () => {
-  const user = username.value.trim().toLowerCase();
-  const pass = password.value.trim();
-
-  // ❌ CAMPOS VAZIOS
-  if (user === "" || pass === "") {
-    mostrarMensagem("Preencha todos os campos", "error");
-    animarErro();
-    return;
+  function mostrarMensagem(texto, tipo) {
+    mensagem.textContent = texto;
+    mensagem.className = tipo;
   }
 
-  // ❌ USUÁRIO NÃO EXISTE OU SENHA ERRADA
-  if (!usuariosValidos[user] || usuariosValidos[user] !== pass) {
-    mostrarMensagem("Usuário ou senha incorretos", "error");
-    animarErro();
-    return;
+  // =====================================
+  // 👁️ MOSTRAR / ESCONDER SENHA
+  // =====================================
+  togglePassword.addEventListener("click", () => {
+    if (password.type === "password") {
+      password.type = "text";
+      togglePassword.textContent = "🙈";
+    } else {
+      password.type = "password";
+      togglePassword.textContent = "👁️";
+    }
+  });
+
+  // =====================================
+  // ANIMAÇÃO DE ERRO
+  // =====================================
+  function animarErro() {
+    loginBox.classList.add("shake");
+    setTimeout(() => loginBox.classList.remove("shake"), 400);
   }
 
-  // ✅ LOGIN VÁLIDO
-  btnLogin.disabled = true;
-  btnLogin.textContent = "Conectando...";
-  overlay.classList.remove("hidden");
+  // =====================================
+  // LOGIN
+  // =====================================
+  btnLogin.addEventListener("click", () => {
+    const user = username.value.trim().toLowerCase();
+    const pass = password.value.trim();
 
-  mostrarMensagem("Conectando ao servidor...", "success");
-
-  setTimeout(() => {
-    mostrarMensagem("Autenticando usuário...", "success");
-  }, 1000);
-
-  setTimeout(() => {
-    mostrarMensagem(`Bem-vindo, ${user}!`, "success");
-
-    // 💾 LOGIN OFFLINE
-    if (offlineCheckbox.checked) {
-      localStorage.setItem("loginOffline", "true");
-      localStorage.setItem("userSalvo", user);
+    if (!user || !pass) {
+      mostrarMensagem("Preencha todos os campos", "error");
+      animarErro();
+      return;
     }
 
-    overlay.classList.add("hidden");
+    if (!usuariosValidos[user] || usuariosValidos[user] !== pass) {
+      mostrarMensagem("Usuário ou senha incorretos", "error");
+      animarErro();
+      return;
+    }
 
-    // 🔁 REDIRECIONAMENTO
-    window.location.href = "https://vtmcursos.netlify.app";
-  }, 2500);
-});
+    // LOGIN CORRETO
+    mostrarMensagem("Conectando...", "success");
+    btnLogin.disabled = true;
+    btnLogin.textContent = "Entrando...";
 
-// =====================================
-// LOGIN OFFLINE AUTOMÁTICO
-// =====================================
-if (localStorage.getItem("loginOffline") === "true") {
-  const userSalvo = localStorage.getItem("userSalvo");
-  if (userSalvo) {
-    username.value = userSalvo;
-    mostrarMensagem("Login offline ativado", "success");
+    if (overlay) overlay.classList.remove("hidden");
+
+    // LOGIN OFFLINE
+    if (offlineCheckbox.checked) {
+      localStorage.setItem("loginOffline", "true");
+      localStorage.setItem("usuarioOffline", user);
+    } else {
+      localStorage.clear();
+    }
+
+    setTimeout(() => {
+      window.location.href = "https://vtmcursos.netlify.app";
+    }, 2000);
+  });
+
+  // =====================================
+  // LOGIN OFFLINE AUTOMÁTICO
+  // =====================================
+  const offlineAtivo = localStorage.getItem("loginOffline");
+  const usuarioOffline = localStorage.getItem("usuarioOffline");
+
+  if (offlineAtivo === "true" && usuarioOffline) {
+    username.value = usuarioOffline;
+    mostrarMensagem(`Login offline ativo (${usuarioOffline})`, "success");
+
+    if (overlay) overlay.classList.remove("hidden");
+
+    setTimeout(() => {
+      window.location.href = "https://vtmcursos.netlify.app";
+    }, 1500);
   }
 
-
-
-
-
-
-
-
+});
