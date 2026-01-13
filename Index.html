@@ -1,66 +1,68 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>virtum cursos</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Client</title>
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="style.css">
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
 
-    <!-- Fonte futurista -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+  <!-- Fonte opcional -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- OVERLAY + LOADING (BLUR DA TELA) -->
-    <div id="overlay" class="hidden">
-        <div class="spinner"></div>
+  <!-- OVERLAY (BLUR + LOADING) -->
+  <div id="overlay" class="hidden">
+    <div class="loader"></div>
+  </div>
+
+  <!-- CONTAINER -->
+  <div class="container">
+
+    <!-- LOGO -->
+    <div id="login-logo">LOGIN</div>
+
+    <!-- CAIXA DE LOGIN -->
+    <div id="login-box">
+
+      <!-- USUÁRIO -->
+      <input
+        type="text"
+        id="username"
+        placeholder="Usuário"
+        autocomplete="off"
+      >
+
+      <!-- SENHA -->
+      <input
+        type="password"
+        id="password-box"
+        placeholder="Senha"
+      >
+
+      <!-- MOSTRAR / ESCONDER SENHA -->
+      <label class="password-toggle">
+        <span id="toggle-password">👁️</span>
+        <span>Mostrar senha</span>
+      </label>
+
+      <!-- LOGIN OFFLINE -->
+      <label class="password-toggle">
+        <input type="checkbox" id="log-offline-checkbox">
+        <span>Login offline</span>
+      </label>
+
+      <!-- BOTÃO -->
+      <button id="login-button">Login</button>
+
+      <!-- A MENSAGEM É CRIADA PELO JS -->
     </div>
 
-    <!-- CONTAINER PRINCIPAL -->
-    <div class="container">
+  </div>
 
-        <!-- LOGO -->
-        <div id="login-logo">Login</div>
-
-        <!-- CAIXA DE LOGIN -->
-        <div id="login-box">
-
-            <!-- INPUT USUÁRIO -->
-            <input
-                type="text"
-                id="username"
-                placeholder="Usuário"
-                autocomplete="off"
-            >
-
-            <!-- INPUT SENHA -->
-            <input
-                type="password"
-                id="password-box"
-                placeholder="Senha"
-            >
-
-            <!-- OPÇÕES -->
-            <label class="password-toggle">
-                <input type="checkbox" id="log-offline-checkbox">
-                <span id="toggle-password">👁️</span>
-                <span id="esconder">Esconder senha</span>
-            </label>
-
-            <!-- BOTÃO LOGIN -->
-            <button id="login-button">Login</button>
-
-            <!-- A MENSAGEM (erro/sucesso) É CRIADA PELO JS -->
-        </div>
-
-    </div>
-
-    <!-- JAVASCRIPT -->
-    <script src="login.js"></script>
-
+  <!-- JAVASCRIPT -->
+  <script src="script.js"></script>
 </body>
 </html>
-
-
